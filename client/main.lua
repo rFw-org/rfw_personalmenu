@@ -18,16 +18,26 @@ RMenu:Get('personnal', 'main').Closed = function()
 end;
 
 RMenu.Add('personnal', 'inventory', RageUI.CreateSubMenu(RMenu:Get('personnal', 'main'), "Inventory", "~b~Player inventory"))
-RMenu:Get('personnal', 'inventory').EnableMouse = true
+RMenu:Get('personnal', 'inventory').EnableMouse = false
 RMenu:Get('personnal', 'inventory').Closed = function()
     -- TODO Perform action
 end;
 
 RMenu.Add('personnal', 'inventory_use', RageUI.CreateSubMenu(RMenu:Get('personnal', 'main'), "Inventory", "~b~Player inventory"))
-RMenu:Get('personnal', 'inventory_use').EnableMouse = true
+RMenu:Get('personnal', 'inventory_use').EnableMouse = false
 RMenu:Get('personnal', 'inventory_use').Closed = function()
     -- TODO Perform action
 end;
+
+Citizen.CreateThread(function()
+    for k,v in pairs(config.menu) do
+        RMenu.Add('personnal', v.name, RageUI.CreateSubMenu(RMenu:Get('personnal', 'main'), "Menu", "~b~Player menu"))
+        RMenu:Get('personnal', v.name).EnableMouse = false
+        RMenu:Get('personnal', v.name).Closed = function()
+            -- TODO Perform action
+        end;
+    end
+end)
 
 function OpenPersonnalMenu()
     if MenuOpen then
@@ -45,8 +55,25 @@ function OpenPersonnalMenu()
                         end 
                     end, RMenu:Get('personnal', 'inventory'))
             
+                    for k,v in pairs(config.menu) do
+                        RageUI.ButtonWithStyle(v.name, nil, { RightLabel = "→" }, true, function(_, _, s)
+                        end, RMenu:Get('personnal', v.name))
+                    end
                 end, function()
                 end)
+
+                for k,v in pairs(config.menu) do
+                    RageUI.IsVisible(RMenu:Get('personnal', v.name), true, true, true, function()
+                        for _,i in pairs(v.options) do
+                            RageUI.Button(i.name, nil, true, function(_, _, s)
+                                if s then
+                                    i.action()
+                                end
+                            end)
+                        end
+                    end, function()
+                    end)
+                end
 
                 RageUI.IsVisible(RMenu:Get('personnal', 'inventory'), true, true, true, function()
                     for k,v in pairs(playerInventory) do
