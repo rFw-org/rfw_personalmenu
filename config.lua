@@ -1,5 +1,5 @@
 config = {
-    key = "F5", -- Events prefix, i suggest you to change that
+    key = "F5",
 
     menu = {
         {
@@ -15,6 +15,22 @@ config = {
                     name = "Close hood",
                     action = function()
                         SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 4, true)
+                    end,
+                },
+                {
+                    name = "Open trunk",
+                    action = function()
+                        for i = 5,7 do
+                            SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), i, 0, true)
+                        end
+                    end,
+                },
+                {
+                    name = "Close trunk",
+                    action = function()
+                        for i = 5,7 do
+                            SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), i, true)
+                        end
                     end,
                 },
             },

@@ -95,7 +95,22 @@ function OpenPersonnalMenu()
                         end
                     end)
 
-                    RageUI.ButtonWithStyle("Give", nil, { RightLabel = "→" }, true, function(_, _, s)
+                    RageUI.ButtonWithStyle("Give", nil, { RightLabel = "→" }, true, function(_, h, s)
+                        if s then
+                            local player, dst = GetClosestPlayer()
+                            if player ~= nil and dst < 1.5 then
+                                local target = GetPlayerServerId(player)
+                                local count = KeyboardAmount()
+                                if count ~= nil and count > 0 and count <= selected.count then
+                                    TriggerServerEvent("rFw:PlayerGiveToPlayer", target, selected.item, count, selected.count)
+                                end
+                            else
+                                ShowNotification("No near player.")
+                            end
+                        end
+                        if h then
+                            DisplayClosetPlayer()
+                        end
                     end)
 
                 end, function()
