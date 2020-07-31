@@ -1,5 +1,6 @@
 local MenuOpen = false
 local playerInventory = {}
+local pWeight = 0
 local mileage = 0
 local perm = 0
 local selected = {
@@ -73,7 +74,9 @@ function OpenPersonnalMenu()
 
                     RageUI.ButtonWithStyle("Inventaire", nil, { RightLabel = "→" }, true, function(_, _, s)
                         if s then
-                            playerInventory = exports.rFw:GetPlayerInv()
+                            callback = exports.rFw:GetPlayerInv()
+                            playerInventory = callback.inv
+                            pWeight = callback.weight
                         end 
                     end, RMenu:Get('personnal', 'inventory'))
 
@@ -99,6 +102,8 @@ function OpenPersonnalMenu()
                 end
 
                 RageUI.IsVisible(RMenu:Get('personnal', 'inventory'), true, true, true, function()
+                    RageUI.Separator("Weight: ~b~"..pWeight.."~s~/50")
+
                     for k,v in pairs(playerInventory) do
                         RageUI.ButtonWithStyle(v.label, nil, { RightLabel = "~b~"..v.count.."→" }, true, function(_, _, s)
                             if s then

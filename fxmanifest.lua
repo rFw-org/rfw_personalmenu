@@ -23,6 +23,7 @@ client_scripts {
     "@RageUI/src/client/menu/items/UISlider.lua",
     "@RageUI/src/client/menu/items/UISliderHeritage.lua",
     "@RageUI/src/client/menu/items/UISliderProgress.lua",
+    "@RageUI/src/client/menu/items/UISeparator.lua",
     "@RageUI/src/client/menu/panels/UIColourPanel.lua",
     "@RageUI/src/client/menu/panels/UIGridPanel.lua",
     "@RageUI/src/client/menu/panels/UIGridPanelHorizontal.lua",
