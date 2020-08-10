@@ -107,8 +107,9 @@ function OpenPersonnalMenu()
                     for k,v in pairs(playerInventory) do
                         RageUI.ButtonWithStyle(v.label, nil, { RightLabel = "~b~"..v.count.."→" }, true, function(_, _, s)
                             if s then
-                                selected.item = k
+                                selected.item = v.item
                                 selected.count = v.count
+                                selected.id = k
                             end
                         end, RMenu:Get('personnal', 'inventory_use'))
                     end
@@ -138,6 +139,15 @@ function OpenPersonnalMenu()
                         end
                         if h then
                             DisplayClosetPlayer()
+                        end
+                    end)
+
+                    RageUI.ButtonWithStyle("Drop", nil, { RightLabel = "→" }, true, function(_, _, s)
+                        if s then
+                            local count = KeyboardAmount()
+                            if count ~= nil and count > 0 and count <= selected.count then
+                                TriggerServerEvent("rFw:DropItem", selected.item, selected.id, count, GetEntityCoords(GetPlayerPed(-1)))
+                            end
                         end
                     end)
 
